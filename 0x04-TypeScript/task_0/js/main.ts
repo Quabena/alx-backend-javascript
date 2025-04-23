@@ -1,46 +1,89 @@
-// main.ts
-
-interface LearnerProfile {
-  firstName: string;
-  lastName: string;
+// Define a structure for Student information
+export interface Student {
+  givenName: string;
+  familyName: string;
   age: number;
-  location: string;
+  country: string;
 }
 
-const learnerOne: LearnerProfile = {
-  firstName: "Kwame",
-  lastName: "Mensah",
-  age: 22,
-  location: "Accra",
-};
-
-const learnerTwo: LearnerProfile = {
-  firstName: "Ama",
-  lastName: "Owusu",
+// Sample Student records
+const studentOne: Student = {
+  givenName: "Minho",
+  familyName: "Kim",
   age: 21,
-  location: "Kumasi",
+  country: "Busan, South Korea",
 };
 
-const enrolledLearners: LearnerProfile[] = [learnerOne, learnerTwo];
+const studentTwo: Student = {
+  givenName: "Katarzyna",
+  familyName: "Nowak",
+  age: 23,
+  country: "Krakow, Poland",
+};
 
-// Create a table element
-const tableElement: HTMLTableElement = document.createElement("table");
+// Collection of Students
+const StudentRegistry: Student[] = [studentOne, studentTwo];
 
-// Loop through each learner and create rows
-enrolledLearners.forEach((student: LearnerProfile): void => {
-  const rowElement: HTMLTableRowElement = document.createElement("tr");
+// CSS to style the page and table
+const cssRules = `
+  html {
+    height: 100%;
+    padding: 0;
+  }
+  body {
+    margin: 10%;
+    height: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+  }
+  table {
+    border-collapse: collapse;
+  }
+  thead {
+    font-weight: 600;
+  }
+  td {
+    padding: 10px;
+    border: 1px solid #888;
+    cursor: pointer;
+  }
+  td:hover {
+    background-color: #e0e0e0;
+  }
+  td:first-child {
+    text-align: center;
+  }
+`;
 
-  const nameCell: HTMLTableCellElement = document.createElement("td");
-  nameCell.textContent = student.firstName;
+/**
+ * Renders a table of Students on the web page.
+ * @param entries List of Student objects to render.
+ * @creator Original rewrite by ChatGPT
+ */
+export const renderStudents = (entries: Student[]): void => {
+  const tableElement = document.createElement("table");
 
-  const locationCell: HTMLTableCellElement = document.createElement("td");
-  locationCell.textContent = student.location;
+  const header = tableElement.createTHead();
+  const headerRow = header.insertRow();
+  headerRow.innerHTML = "<td>Given Name</td><td>Country</td>";
 
-  rowElement.appendChild(nameCell);
-  rowElement.appendChild(locationCell);
-  tableElement.appendChild(rowElement);
-});
+  const body = tableElement.createTBody();
+  entries.forEach((entry) => {
+    const row = body.insertRow();
+    row.innerHTML = `<td>${entry.givenName}</td><td>${entry.country}</td>`;
+  });
 
-// Append the table to the document body
-document.body.appendChild(tableElement);
+  document.body.appendChild(tableElement);
+};
 
+// Inject the table and styles
+renderStudents(StudentRegistry);
+
+const styleElement = document.createElement("style");
+styleElement.textContent = cssRules;
+document.head.appendChild(styleElement);
+
+// Set the document title
+document.title = "Student Overview";

@@ -1,4 +1,4 @@
-0x06. Unittests in JS
+Node JS Basics
 ==========================
 Author : Evans Adu
 ==========================
